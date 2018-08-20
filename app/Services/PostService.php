@@ -17,6 +17,8 @@ interface PostService
 
     public function findById($postId);
 
+    public function search($query);
+
     public function save($post);
 
     public function delete($postId);

@@ -44,17 +44,22 @@ class PostController extends Controller
         return new Post($this->postService->findById($postId));
     }
 
+    public function search()
+    {
+        return Post::collection($this->postService->search(Input::get('query')));
+    }
+
     public function save(Request $request)
     {
         $post = Validator::make($request->json()->all(), [
-            'title' => 'required|max:200',
-            'subtitle' => 'required|max:500',
+            'title' => 'max:200|required',
+            'subtitle' => 'max:500|required',
             'content' => 'required',
-            'type' => 'integer',
-            'author.name' => 'nullable|filled|max:50',
-            'category.id' => 'required|integer',
-            'added' => 'nullable|date',
-            'image' => 'nullable|filled|max:1000'
+            'type' => 'integer|required',
+            'category.id' => 'integer|required',
+            'author.name' => 'filled|max:50|nullable',
+            'added' => 'date|nullable',
+            'image' => 'filled|max:1000|nullable'
         ])->validate();
         return new Post($this->postService->save($post));
     }

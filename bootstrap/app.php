@@ -24,10 +24,13 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->configure('filesystems');
+$app->configure('scout');
 
 $app->withFacades();
 
 $app->withEloquent();
+
+$app->instance('path.config', app()->basePath() . DIRECTORY_SEPARATOR . 'config');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,8 +79,9 @@ $app->middleware([
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+$app->register(Laravel\Scout\ScoutServiceProvider::class);
+$app->register(App\Providers\TNTSearchScoutServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 
 namespace App\Services\Utils;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Input;
 
@@ -10,8 +9,9 @@ trait Pagination
 {
     public static $perPage = 10;
 
-    protected function paginate(Builder $query)
+    protected function paginate($query)
     {
-       return new Collection($query->simplePaginate(Input::get('elems', self::$perPage))->items());
+        $elems = Input::get('elems', self::$perPage);
+        return new Collection($query->paginate($elems)->items());
     }
 }

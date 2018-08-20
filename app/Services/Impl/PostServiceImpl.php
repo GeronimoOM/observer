@@ -27,6 +27,11 @@ class PostServiceImpl implements PostService
         return Post::findOrFail($postId);
     }
 
+    public function search($query)
+    {
+        return $this->paginate(Post::search($query));
+    }
+
     public function save($post)
     {
         if(array_key_exists('author', $post)) {
