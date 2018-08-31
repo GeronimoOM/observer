@@ -6,7 +6,13 @@ import { fetchPosts } from '../actions/posts'
 
 class PostsListContainer extends Component {
   componentDidMount() {
-    this.props.fetchPosts()
+    this.props.fetchPosts(1, this.props.category)
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.category !== this.props.category) {
+      this.props.fetchPosts(1, this.props.category)
+    }
   }
 
   render() {

@@ -7,7 +7,7 @@ const PostCard = ({ added, title, subtitle, content }) => (
     <p>{ formatDate(added) }</p>
 	  <h3>{ title }</h3>
 		<h4>{ subtitle }</h4>
-		<p>{ content }</p>
+		<div dangerouslySetInnerHTML={{ __html: content }} />
 	</div>
 )
 

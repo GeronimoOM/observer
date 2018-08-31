@@ -13,9 +13,8 @@ const MainLayout = () => (
       <HeaderNavContainer/>
     </Header>
     <Content>
-      <Route exact path='/' component={ PostsListContainer }/>
-      <Route path='/:category' render={({ match: { params: { category } } }) => (
-        <h2>{ category }</h2>
+      <Route path='/:category?' render={({ match: { params: { category } } }) => (
+        <PostsListContainer category={ category } />
       )}/>
     </Content>
     <Footer>
