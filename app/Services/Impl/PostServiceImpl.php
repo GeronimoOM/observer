@@ -2,8 +2,8 @@
 
 namespace App\Services\Impl;
 
-use App\Model\Author;
-use App\Model\Post;
+use App\Models\Author;
+use App\Models\Post;
 use App\Services\PostService;
 use App\Services\Utils\Pagination;
 use Illuminate\Support\Carbon;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use App\Facades\Category;
 use Illuminate\Database\Eloquent\Builder;
