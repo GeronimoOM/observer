@@ -1,26 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import HeaderNav from '../components/HeaderNav'
-import { fetchCategories } from '../actions/categories'
+import { Categories } from '../common/categories'
 
+const HeaderNavContainer = () => (
+  <HeaderNav categories={ Categories } />
+)
 
-class HeaderNavContainer extends Component {
-  componentDidMount() {
-    this.props.fetchCategories()
-  }
-
-  render() {
-    return (
-      <HeaderNav categories={this.props.categories} />
-    )
-  }
-}
-
-export default connect(
-  (state) => { 
-    return {
-      categories: state.categories 
-    }
-  },
-  { fetchCategories }
-)(HeaderNavContainer)
+export default HeaderNavContainer

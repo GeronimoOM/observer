@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import PostCard from './PostCard'
 import { Post } from '../types'
 
-
 const PostsList = ({ posts }) => (
   <div className='PostsList'>
     { posts.map( (post) => 

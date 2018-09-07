@@ -6,7 +6,6 @@ use App\Http\Resources\Post;
 use App\Services\CategoryService;
 use App\Services\PostService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -28,12 +27,12 @@ class PostController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function find()
+    public function find(Request $request)
     {
-        if(!Input::get('category')) {
+        if(!$request->has('category')) {
             $posts = $this->postService->find();
         } else {
-            $posts = $this->postService->findByCategory(Input::get('category'));
+            $posts = $this->postService->findByCategory($request->input('category'));
         }
         return Post::collection($posts);
     }
@@ -44,9 +43,9 @@ class PostController extends Controller
         return new Post($this->postService->findById($postId));
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        return Post::collection($this->postService->search(Input::get('query')));
+        return Post::collection($this->postService->search($request->input('query')));
     }
 
     public function save(Request $request)

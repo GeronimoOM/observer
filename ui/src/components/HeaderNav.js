@@ -1,26 +1,28 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Menu } from 'antd'
-import PropTypes from 'prop-types';
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 import { Category } from '../types'
 
-
 const HeaderNav = ({ categories }) => (
-  <Menu
-    mode='horizontal'>
-      <Menu.Item key={categories.length}>
-      <NavLink to='/'>
+  <Navbar>
+    <Nav>
+      <NavLinkItem to='/' key={categories.length}>
         Главная
-      </NavLink>
-    </Menu.Item>
-    { categories.map( (category) => 
-      <Menu.Item key={category.id}>
-        <NavLink to={category.url}>
+      </NavLinkItem>
+      { categories.map( (category) => 
+        <NavLinkItem to={category.url} key={category.id}>
           {category.name} 
-        </NavLink>
-      </Menu.Item>
-    )}
-  </Menu>
+        </NavLinkItem>
+      )}
+    </Nav>
+  </Navbar>
+)
+
+const NavLinkItem = (props) => (
+  <NavItem componentClass={NavLink} href={props.to} { ...props } >
+    {props.children}
+  </NavItem>
 )
 
 HeaderNav.propTypes = {
