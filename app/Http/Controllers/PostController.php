@@ -27,6 +27,28 @@ class PostController extends Controller
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * @OA\Get(path="/api/posts",
+     *   tags={"posts"},
+     *   summary="Find list of Posts",
+     *   @OA\Parameter(
+     *       name="category",
+     *       in="query",
+     *       description="Category to filter Posts by",
+     *       @OA\Schema(type="integer", minimum=1)
+     *   ),
+     *   @OA\Parameter(ref="#/components/parameters/page"),
+     *   @OA\Parameter(ref="#/components/parameters/elems"),
+     *   @OA\Response(
+     *     response="200", 
+     *     description="Found Posts",
+     *     @OA\JsonContent(
+     *       type="array",
+     *       @OA\Items(ref="#/components/schemas/Post")
+     *     )
+     *   )
+     * )
+     */
     public function find(Request $request)
     {
         if(!$request->has('category')) {
@@ -37,17 +59,77 @@ class PostController extends Controller
         return Post::collection($posts);
     }
 
-
+    /**
+     * @OA\Get(path="/api/posts/{id}",
+     *   tags={"posts"},
+     *   summary="Find Post by id",
+     *   @OA\Parameter(
+     *       name="id",
+     *       in="path",
+     *       description="Identifier of the Post",
+     *       required=true,
+     *       @OA\Schema(type="integer", minimum=1)
+     *   ),
+     *   @OA\Response(
+     *     response="200", 
+     *     description="Found Post",
+     *     @OA\JsonContent(
+     *       ref="#/components/schemas/Post"
+     *     )
+     *   )
+     * )
+     */
     public function findById($postId)
     {
         return new Post($this->postService->findById($postId));
     }
 
+    /**
+     * @OA\Get(path="/api/posts/search",
+     *   tags={"posts"},
+     *   summary="Find list of Posts",
+     *   @OA\Parameter(
+     *       name="query",
+     *       in="query",
+     *       description="Query to search Posts by",
+     *       required=true,
+     *       @OA\Schema(type="string")
+     *   ),
+     *   @OA\Parameter(ref="#/components/parameters/page"),
+     *   @OA\Parameter(ref="#/components/parameters/elems"),
+     *   @OA\Response(
+     *     response="200", 
+     *     description="Found Posts",
+     *     @OA\JsonContent(
+     *       type="array",
+     *       @OA\Items(ref="#/components/schemas/Post")
+     *     )
+     *   )
+     * )
+     */
     public function search(Request $request)
     {
         return Post::collection($this->postService->search($request->input('query')));
     }
 
+     /**
+     * @OA\Post(path="/api/posts",
+     *   tags={"posts"},
+     *   summary="Save Post",
+     *   @OA\RequestBody(
+     *     required=true,
+     *     description="Post data",
+     *     @OA\JsonContent(ref="#/components/schemas/Post")
+     *   ),
+     *   @OA\Response(
+     *     response="200", 
+     *     description="Saved Post",
+     *     @OA\JsonContent(
+     *       ref="#/components/schemas/Post")
+     *     )
+     *   )
+     * )
+     */
     public function save(Request $request)
     {
         $post = Validator::make($request->json()->all(), [
@@ -63,11 +145,39 @@ class PostController extends Controller
         return new Post($this->postService->save($post));
     }
 
+        /**
+     * @OA\Delete(path="/api/posts/{id}",
+     *   tags={"posts"},
+     *   summary="Delete Post",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     description="Identifier of the Post",
+     *     @OA\Schema(type="integer", minimum=1)
+     *   ),
+     *   @OA\Response(response=200, description="Post deleted"),
+     * )
+     */
     public function delete($postId)
     {
         $this->postService->delete($postId);
     }
 
+     /**
+     * @OA\Get(path="/api/categories",
+     *   tags={"categories"},
+     *   summary="Find Categories",
+     *   @OA\Response(
+     *     response="200", 
+     *     description="Found Categories",
+     *     @OA\JsonContent(
+     *       type="array",
+     *       @OA\Items(ref="#/components/schemas/Category")
+     *     )
+     *   )
+     * )
+     */
     public function findCategories()
     {
         return $this->categoryService->find();

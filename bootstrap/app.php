@@ -25,6 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 $app->configure('filesystems');
 $app->configure('scout');
+$app->configure('swagger-lume');
 
 $app->withFacades();
 
@@ -87,6 +88,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 $app->register(Laravel\Scout\ScoutServiceProvider::class);
 $app->register(App\Providers\TNTSearchScoutServiceProvider::class);
+$app->register(\SwaggerLume\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

@@ -7,6 +7,19 @@ use App\Services\CategoryService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @OA\Schema(
+ *   schema="Category",
+ *   @OA\Property(
+ *     property="id",
+ *     type="integer"
+ *   ),
+ *   @OA\Property(
+ *     property="name",
+ *     type="string"
+ *   )
+ * )
+ */
 class CategoryServiceImpl implements CategoryService
 {
     /**
@@ -19,7 +32,6 @@ class CategoryServiceImpl implements CategoryService
         $this->load();
     }
 
-
     public function find()
     {
         return $this->categories->values();
@@ -29,7 +41,6 @@ class CategoryServiceImpl implements CategoryService
     {
         return $this->categories->get($categoryId);
     }
-
 
     private function load()
     {
