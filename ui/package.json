@@ -1,6 +1,6 @@
 {
-  "name": "news",
-  "version": "0.0.0",
+  "name": "observer",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -14,6 +14,7 @@
     "history": "^4.7.2",
     "react": "^16.4.2",
     "react-bootstrap": "^0.32.3",
+    "react-bootstrap-typeahead": "^3.2.4",
     "react-dom": "^16.4.2",
     "react-infinite-scroller": "^1.2.0",
     "react-redux": "^5.0.2",

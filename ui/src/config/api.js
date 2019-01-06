@@ -1,6 +1,9 @@
-const API_BASE = 'http://localhost:8000/api'
+const ApiBase = 'https://observer-news-api.herokuapp.com/api'
 
 export default Object.freeze({
-  Posts: API_BASE + '/posts',
-  Categories: API_BASE + '/categories'
+  Posts: ApiBase + '/posts',
+  PostsSearch: ApiBase + '/posts/search',
+  Categories: ApiBase + '/categories'
 })
+
+export const Elems = 10

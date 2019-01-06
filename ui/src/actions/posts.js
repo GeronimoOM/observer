@@ -5,7 +5,8 @@ import handleErrors from '../util/handleErrors'
 export const { fetchPostsReq, fetchPostsSucc, fetchPostsErr } = createActions({
   FETCH_POSTS_REQ: (options, page) => ({ options, page }),
   FETCH_POSTS_SUCC: (posts, options, page) => ({ posts, options, page }),
-}, 'FETCH_POSTS_ERR')
+  FETCH_POSTS_ERR: (error) => ({ error })
+})
 
 export function fetchPosts(options = {}, page = 1) {
   return (dispatch) => {
@@ -35,16 +36,12 @@ export function fetchPostsByType(type, page) {
   return fetchPosts({ type }, page)
 }
 
-function buildUrl({ flag, category, type }, page) {
-  const url = new URL(Api.Posts)
-  url.search = new URLSearchParams({ page })
-  if (flag) {
-    url.searchParams.append(flag, true)
-  } else {
-    if (category) 
-      url.searchParams.append('category', category)
-    if (type) 
-      url.searchParams.append('type', type)
-  }
+export function fetchPostsByQuery(query) {
+  return fetchPosts({ query })
+}
+
+function buildUrl(options, page) {
+  const url = new URL(!options.query? Api.Posts : Api.PostsSearch)
+  url.search = new URLSearchParams({ ...options, page })
   return url
 }

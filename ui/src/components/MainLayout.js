@@ -3,12 +3,16 @@ import { Route } from 'react-router-dom'
 import HeaderNavContainer from '../containers/HeaderNavContainer'
 import MainPostsContainer from '../containers/MainPostsContainer'
 import CategoryPostsContainer from '../containers/CategoryPostsContainer'
+import PostsSearchBarContainer from '../containers/PostsSearchBarContainer'
 import { categoryIdByUrl } from '../common/categories'
 
 const MainLayout = () => (
   <div className='layout'>
     <div>
       <HeaderNavContainer/>
+    </div>
+    <div>
+      <PostsSearchBarContainer/>
     </div>
     <div>
       <Route path='/' exact component={ MainPostsContainer } />
