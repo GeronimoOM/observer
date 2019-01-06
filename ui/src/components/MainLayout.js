@@ -6,13 +6,11 @@ import CategoryPostsContainer from '../containers/CategoryPostsContainer'
 import PostsSearchBarContainer from '../containers/PostsSearchBarContainer'
 import { categoryIdByUrl } from '../common/categories'
 
+// TODO add PostsSearchBarContainer to the layout (anywhere)
 const MainLayout = () => (
   <div className='layout'>
     <div>
       <HeaderNavContainer/>
-    </div>
-    <div>
-      <PostsSearchBarContainer/>
     </div>
     <div>
       <Route path='/' exact component={ MainPostsContainer } />

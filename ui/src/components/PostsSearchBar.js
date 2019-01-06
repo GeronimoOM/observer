@@ -3,20 +3,17 @@ import PropTypes from 'prop-types'
 import { Post } from '../types'
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
+// TODO
 const PostsSearchBar = ({ posts, fetchPosts, fetching }) => (
     <AsyncTypeahead
-      options={ posts }
-      onSearch={ fetchPosts }
-      isLoading={ fetching }
+      /** Lookup documentation of AsyncTypeahead component, 
+          find which 3 parameters correspond to passed properties **/
       labelKey={ 'title' }
       minLength={ 3 }
       promptText={ 'Поиск' }
       searchPosts={ 'Идет поиск...' }
       renderMenuItemChildren={ ({ title, subtitle }) => (
-        <div>
-          <h4>{ title }</h4>
-          <h5>{ subtitle }</h5>
-        </div>
+        /** render Post in dropdown, any valid JSX **/
     )}
     />
   )
