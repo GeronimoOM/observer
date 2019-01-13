@@ -1,83 +1,67 @@
-import { handleActions } from 'redux-actions'
+import { combineReducers } from 'redux'
+import { combineActions, handleAction, handleActions } from 'redux-actions'
 import { fetchPostsReq, fetchPostsSucc, fetchPostsErr } from  '../actions/posts'
 import { PostFlags, PostTypes } from '../common/posts'
 import { Categories } from '../common/categories'
 import { Elems } from '../config/api'
-import { identity } from '../util/functions'
 
-const defaultState = {
-  entities: {},
-  maps: {
-    byFlag: defaultStateMap(Object.values(PostFlags)),
-    byType: defaultStateMap(Object.values(PostTypes)),
-    byCategory: defaultStateMap(Categories.map(c => c.id)),
-    byQuery: defaultStateIds()
-  }
+const defaultMaps = {
+  byFlag: defaultMap(Object.values(PostFlags)),
+  byType: defaultMap(Object.values(PostTypes)),
+  byCategory: defaultMap(Categories.map(c => c.id)),
+  byQuery: defaultIds()
 }
 
-function defaultStateMap(keys) {
-  return keys.reduce((map, key) => Object.assign(map, { [key]: defaultStateIds() }), {})
+function defaultMap(keys) {
+  return Object.assign({}, ...keys.map(key => ({ [key]: defaultIds() })))
 }
 
-function defaultStateIds() {
+function defaultIds() {
   return { ids: [], fetching: false }
 }
 
-const reducer = handleActions(
-  new Map([
-    [ 
-      fetchPostsReq, 
-      (state, { payload: { options } }) => stateReducer(state, 
-        (maps) => mapsReducer(maps, options, (ids) => idsReducer(ids, { fetching: true })))
-    ], [ 
-      fetchPostsSucc,  
-      (state, { payload: { posts, options, page } }) => stateReducer(state, 
-        (maps) => mapsReducer(maps, options, (ids) => idsReducer(ids, { posts, page, fetching: false } )),
-        (entities) => entitiesReducer(entities, posts))
-    ], [ 
-      fetchPostsErr, 
-      (state, { payload: { options } }) => stateReducer(state, 
-        (maps) => mapsReducer(maps, options, (ids) => idsReducer(ids, { fetching: false })))
-    ]
-  ]),
-  defaultState
+const entities = handleAction(
+  fetchPostsSucc, 
+  (entities, { payload: { posts } }) => Object.assign({}, entities, ...posts.map((post) => ({ [post.id]: post }))),
+  {}
 )
 
-function stateReducer(state, mapsReducer, entitiesReducer = identity) {
-  return {
-    entities: entitiesReducer(state.entities),
-    maps: mapsReducer(state.maps)
-  }
-}
+const ids = handleActions(
+  new Map([
+    [ 
+      fetchPostsReq,  
+      (ids) => ({...ids, fetching: true }) 
+    ], [ 
+      fetchPostsSucc,  
+      ({ ids }, { payload: { posts, page } }) => ({ 
+        ids: [...ids.slice(0, Elems * (page - 1)), ...posts.map(post => post.id)],
+        fetching: false
+      }) 
+    ], [ 
+      fetchPostsErr, 
+      (ids) => ({...ids, fetching: false }) 
+    ]
+  ]), 
+  defaultIds() 
+)
 
-function entitiesReducer(entities, posts) {
-  return posts.reduce(
-    (entities, post) => Object.assign(entities, { [post.id]: post }), 
-    Object.assign({}, entities)
-  )
-}
+const maps = handleAction(
+  combineActions(fetchPostsReq, fetchPostsSucc, fetchPostsErr),
+  (maps, action) => {
+    const reduceIfKey = (map, key, isMap = true) =>
+      !key? map: (isMap? {...map, [key]: ids(map[key], action) }: ids(map, action))
+      
+    const { payload: { options: { flag, type, category, query } } } = action
+    return {
+      byFlag: reduceIfKey(maps.byFlag, flag),
+      byType: reduceIfKey(maps.byType, type),
+      byCategory: reduceIfKey(maps.byCategory, category),
+      byQuery: reduceIfKey(maps.byQuery, query, false)
+    }
+  },
+  defaultMaps
+)
 
-function mapsReducer(maps, { flag, category, type, query }, idsReducer) {
-  function reduceIfKey(map, key, isMap = true) {
-    return !key? map:
-      isMap? Object.assign({}, map, { [key]: idsReducer(map[key]) }): 
-      idsReducer(map)
-  }
-
-  return {
-    byFlag: reduceIfKey(maps.byFlag, flag),
-    byType: reduceIfKey(maps.byType, type),
-    byCategory: reduceIfKey(maps.byCategory, category),
-    byQuery: reduceIfKey(maps.byQuery, query, false)
-  }
-}
-
-function idsReducer({ ids }, { posts, page, fetching }) {
-  return { 
-    ids: !posts? ids: 
-      ids.slice(0, Elems * (page - 1) + 1).concat(posts.map(post => post.id)),
-    fetching
-  }
-}
+const reducer = combineReducers({ entities, maps })
 
 export default reducer

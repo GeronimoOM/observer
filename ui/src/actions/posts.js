@@ -5,22 +5,21 @@ import handleErrors from '../util/handleErrors'
 export const { fetchPostsReq, fetchPostsSucc, fetchPostsErr } = createActions({
   FETCH_POSTS_REQ: (options, page) => ({ options, page }),
   FETCH_POSTS_SUCC: (posts, options, page) => ({ posts, options, page }),
-  FETCH_POSTS_ERR: (error) => ({ error })
+  FETCH_POSTS_ERR: (error, options) => ({ error, options })
 })
 
 export function fetchPosts(options = {}, page = 1) {
   return (dispatch) => {
     dispatch(fetchPostsReq(options, page))
 
-    const url = buildUrl(options, page)
-    return fetch(url, {method: "GET"})
+    return fetch(buildUrl(options, page))
     .then(handleErrors)
     .then(response => response.json())
     .then(posts => dispatch(fetchPostsSucc(
         posts.map((post) => ({ ...post, added: new Date(post.added) })), 
         options, page
     )))
-    .catch(error => dispatch(fetchPostsErr(error)))
+    .catch(error => dispatch(fetchPostsErr(error, options)))
   }
 }
 
