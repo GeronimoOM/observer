@@ -10,8 +10,8 @@ const HeaderNavbar = ({ categories }) => {
   console.log(links)
 
   return (
-    <Navbar className='justify-content-center' expand={'md'}>
-      <Nav className='Nav'>
+    <Navbar expand='lg'>
+      <Nav className='Nav' fill>
         { links.map( (link) => 
           <NavItem key={link.id}>
             <NavLink className='NavLink' tag={Link} to={'/' + link.url} 

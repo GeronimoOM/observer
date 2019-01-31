@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, CardBody, CardTitle, CardSubtitle, CardText } from 'reactstrap'
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg } from 'reactstrap'
+import { Link } from 'react-router-dom'
 import formatDate from '../util/formatDate'
 
-const PostCard = ({ added, title, subtitle, content }) => (
-  <Card className='PostCard'>
-	 	<CardBody>
-			<CardTitle>{ title }</CardTitle>
-			<CardSubtitle>{ subtitle }</CardSubtitle>
-			<p>{ formatDate(added) }</p>
-			<CardText dangerouslySetInnerHTML={{ __html: content }} />
-		</CardBody>
-	</Card>
+const PostCard = ({ id, added, title, subtitle, content, image }) => (
+	<Link className='Link' to={'/posts/' + id}>
+		<Card className='PostCard'>
+			{ Boolean(image) && <CardImg top width="100%" src={ image } alt={title} /> }
+			<CardBody>
+				<CardTitle>{ title }</CardTitle>
+				<CardSubtitle>{ subtitle }</CardSubtitle>
+				<p>{ formatDate(added) }</p>
+				{/* <CardText dangerouslySetInnerHTML={{ __html: content }} /> */}
+			</CardBody>
+		</Card>
+	</Link>
 )
 
 PostCard.propTypes = {

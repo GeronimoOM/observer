@@ -4,6 +4,10 @@ export class PostsStore {
     this.posts = store.posts
   }
 
+  getPostById(id) {
+    return this.posts.entities[id]
+  }
+
   getPostsByFlag(flag) {
     return this._getPostEntities(this.posts.maps.byFlag[flag])
   }
@@ -22,7 +26,7 @@ export class PostsStore {
 
   _getPostEntities({ ids, fetching, hasMore }) {
     return {
-      posts: ids.map(id => this.posts.entities[id]),
+      posts: ids.map(id => this.getPostById(id)),
       fetching,
       hasMore
     } 
