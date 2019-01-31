@@ -1,7 +1,38 @@
+.App {
+  float: none;
+  min-width: 800px;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+a.NavLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.NavLink {
+  padding: 5px;
+  margin: 0 20px;
+  border-radius: 3px;
+}
+
+.NavLink.active {
+  background-color: #17b2ad;
+}
+
+.PostsSearchBar {
+  max-width: 200px;
+  height: 20px;
+  border-radius: 0; 
+}
+
 .PostsList {
-  width: 500px;
+
 }
 
 .PostCard {
+  max-width: 400px;
+  margin:10px;
   padding: 10px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
 }

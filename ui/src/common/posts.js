@@ -5,8 +5,8 @@ export const PostFlags = Object.freeze({
 })
 
 export const PostTypes = Object.freeze({
-  News: 0,
-  Article: 1,
-  BlogPost: 2,
-  Quote: 3
+  News: 1,
+  Article: 2,
+  BlogPost: 3,
+  Quote: 4
 })

@@ -14,17 +14,22 @@ class PostServiceImpl implements PostService
 
     public function find()
     {
-        return $this->paginate(Post::abridged());
-    }
-
-    public function findByCategory($categoryId)
-    {
-        return $this->paginate(Post::abridged()->where('category_id', '=', $categoryId));
+        return $this->findByOptions();
     }
 
     public function findById($postId)
     {
         return Post::findOrFail($postId);
+    }
+
+    public function findByOptions($options = array())
+    {
+        $query = Post::abridged();
+        if (array_key_exists('category', $options))
+            $query = $query->where('category_id', '=', $options['category']);
+        if (array_key_exists('type', $options))
+            $query = $query->where('type', '=',$options['type']);
+        return $this->paginate($query);
     }
 
     public function search($query)

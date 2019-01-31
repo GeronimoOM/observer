@@ -2,13 +2,13 @@ import { combineReducers } from 'redux'
 import { combineActions, handleAction, handleActions } from 'redux-actions'
 import { fetchPostsReq, fetchPostsSucc, fetchPostsErr } from  '../actions/posts'
 import { PostFlags, PostTypes } from '../common/posts'
-import { Categories } from '../common/categories'
+import { categories } from '../common/categories'
 import { Elems } from '../config/api'
 
 const defaultMaps = {
   byFlag: defaultMap(Object.values(PostFlags)),
   byType: defaultMap(Object.values(PostTypes)),
-  byCategory: defaultMap(Categories.map(c => c.id)),
+  byCategory: defaultMap(categories.map(c => c.id)),
   byQuery: defaultIds()
 }
 
@@ -17,7 +17,7 @@ function defaultMap(keys) {
 }
 
 function defaultIds() {
-  return { ids: [], fetching: false }
+  return { ids: [], fetching: false, hasMore: true }
 }
 
 const entities = handleAction(
@@ -35,7 +35,8 @@ const ids = handleActions(
       fetchPostsSucc,  
       ({ ids }, { payload: { posts, page } }) => ({ 
         ids: [...ids.slice(0, Elems * (page - 1)), ...posts.map(post => post.id)],
-        fetching: false
+        fetching: false,
+        hasMore: posts.length !== 0
       }) 
     ], [ 
       fetchPostsErr, 
@@ -48,6 +49,7 @@ const ids = handleActions(
 const maps = handleAction(
   combineActions(fetchPostsReq, fetchPostsSucc, fetchPostsErr),
   (maps, action) => {
+    console.log(action)
     const reduceIfKey = (map, key, isMap = true) =>
       !key? map: (isMap? {...map, [key]: ids(map[key], action) }: ids(map, action))
       

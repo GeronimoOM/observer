@@ -1,4 +1,4 @@
-export const Categories = [
+export const categories = [
   {"id":1,"name":"Политика","url":"politics"},
   {"id":2,"name":"Экономика","url":"economics"},
   {"id":3,"name":"Здоровье","url":"health"},
@@ -8,7 +8,7 @@ export const Categories = [
 ]
 
 export function categoryByUrl(url) {
-  return Categories.find(cat => cat.url === url)
+  return categories.find(cat => cat.url === url)
 }
 
 export function categoryIdByUrl(url) {

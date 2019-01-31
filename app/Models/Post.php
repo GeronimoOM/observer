@@ -59,7 +59,7 @@ class Post extends Model
     public function scopeAbridged(Builder $query)
     {
         return $query->selectRaw('post_id, title, subtitle, 
-        SUBSTRING(content, 1, 300) AS content, type, category_id, author_id, added, image');
+            SUBSTRING(content, 1, 300) AS content, type, category_id, author_id, added, image');
     }
 
     public function toSearchableArray()
@@ -71,8 +71,6 @@ class Post extends Model
 
     public function getScoutModelsByIds($builder, array $ids)
     {
-        return $this->newQuery()->abridged()->whereIn(
-            $this->getScoutKeyName(), $ids
-        )->get();
+        return $this->newQuery()->abridged()->whereIn($this->getScoutKeyName(), $ids)->get();
     }
 }

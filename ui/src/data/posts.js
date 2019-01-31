@@ -20,10 +20,11 @@ export class PostsStore {
     return this._getPostEntities(this.posts.maps.byQuery)
   }
 
-  _getPostEntities({ ids, fetching }) {
+  _getPostEntities({ ids, fetching, hasMore }) {
     return {
       posts: ids.map(id => this.posts.entities[id]),
-      fetching
+      fetching,
+      hasMore
     } 
   }
 }

@@ -51,6 +51,18 @@ class CreateSchema extends Migration
 
             $this->setCharset($table);
         });
+
+        Schema::create('post_flags', function (Blueprint $table) {
+            $table->unsignedBigInteger('post_id');
+            $table->string('flag', 20);
+            $table->dateTime('assigned');
+
+            $table->foreign('post_id')
+                ->references('post_id')->on('posts')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $this->setCharset($table);
+        });
     }
 
     /**
@@ -60,9 +72,10 @@ class CreateSchema extends Migration
      */
     public function down()
     {
-        Schema::drop('comments');
-        Schema::drop('posts');
-        Schema::drop('authors');
+        Schema::dropIfExists('comments');
+        Schema::dropIfExists('posts');
+        Schema::dropIfExists('authors');
+        Schema::dropIfExists('post_flags');
     }
 
     private function setCharset($table)

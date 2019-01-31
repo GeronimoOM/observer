@@ -5,6 +5,7 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
 const PostsSearchBar = ({ posts, fetchPosts, fetching }) => (
     <AsyncTypeahead
+      className='PostsSearchBar'
       options={ posts }
       onSearch={ fetchPosts }
       isLoading={ fetching }
@@ -15,7 +16,7 @@ const PostsSearchBar = ({ posts, fetchPosts, fetching }) => (
       renderMenuItemChildren={ ({ title, subtitle }) => (
         <div>
           <h4>{ title }</h4>
-          <h5>{ subtitle }</h5>
+          <p>{ subtitle }</p>
         </div>
     )}
     />

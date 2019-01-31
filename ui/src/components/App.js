@@ -1,12 +1,12 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import MainLayout from './MainLayout'
+import AppLayout from './AppLayout'
 
 const App = () => {
   return (
     <div className='App'>
       <Switch>
-        <Route path='/' component={MainLayout} />
+        <Route path='/' component={ AppLayout } />
       </Switch>
     </div>
   );

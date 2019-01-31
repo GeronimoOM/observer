@@ -7,9 +7,9 @@ interface PostService
 {
     public function find();
 
-    public function findByCategory($categoryId);
-
     public function findById($postId);
+
+    public function findByOptions($options);
 
     public function search($query);
 

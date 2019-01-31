@@ -34,8 +34,29 @@ class PostController extends Controller
      *   @OA\Parameter(
      *       name="category",
      *       in="query",
-     *       description="Category to filter Posts by",
-     *       @OA\Schema(type="integer", minimum=1)
+     *       description="Category of Posts",
+     *       @OA\Schema(
+     *          type="integer",
+     *          enum={"politics", "economics", "health", "sport", "culture", "society"}
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="type",
+     *       in="query",
+     *       description="Type of Posts",
+     *       @OA\Schema(
+     *          type="integer", 
+     *          enum={"news", "article", "blog post", "quote"}
+     *       )
+     *   ),
+     *   @OA\Parameter(
+     *       name="flag",
+     *       in="query",
+     *       description="Flag attributed to Posts",
+     *       @OA\Schema(
+     *          type="string", 
+     *          enum={"main", "popular"}
+     *       )
      *   ),
      *   @OA\Parameter(ref="#/components/parameters/page"),
      *   @OA\Parameter(ref="#/components/parameters/elems"),
@@ -51,11 +72,7 @@ class PostController extends Controller
      */
     public function find(Request $request)
     {
-        if(!$request->has('category')) {
-            $posts = $this->postService->find();
-        } else {
-            $posts = $this->postService->findByCategory($request->input('category'));
-        }
+        $posts = $this->postService->find($request->only(['category', 'type', 'flag']));
         return Post::collection($posts);
     }
 

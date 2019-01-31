@@ -6,8 +6,8 @@ namespace App\Models;
 
 abstract class PostType
 {
-    const News = 0;
-    const Article = 1;
-    const BlogPost = 2;
-    const Quote = 3;
+    const News = 1;
+    const Article = 2;
+    const BlogPost = 3;
+    const Quote = 4;
 }

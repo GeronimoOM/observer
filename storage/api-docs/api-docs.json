@@ -16,10 +16,43 @@
                     {
                         "name": "category",
                         "in": "query",
-                        "description": "Category to filter Posts by",
+                        "description": "Category of Posts",
                         "schema": {
                             "type": "integer",
-                            "minimum": 1
+                            "enum": [
+                                "politics",
+                                "economics",
+                                "health",
+                                "sport",
+                                "culture",
+                                "society"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Type of Posts",
+                        "schema": {
+                            "type": "integer",
+                            "enum": [
+                                "news",
+                                "article",
+                                "blog post",
+                                "quote"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "flag",
+                        "in": "query",
+                        "description": "Flag attributed to Posts",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "main",
+                                "popular"
+                            ]
                         }
                     },
                     {
