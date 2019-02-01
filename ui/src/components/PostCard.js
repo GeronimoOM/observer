@@ -4,14 +4,14 @@ import { Card, CardBody, CardTitle, CardSubtitle, CardText, CardImg } from 'reac
 import { Link } from 'react-router-dom'
 import formatDate from '../util/formatDate'
 
-const PostCard = ({ id, added, title, subtitle, content, image }) => (
-	<Link className='Link' to={'/posts/' + id}>
+const PostCard = ({id, added, title, subtitle, content, image}) => (
+	<Link className='text-reset text-decoration-none' to={'/posts/' + id}>
 		<Card className='PostCard'>
-			{ Boolean(image) && <CardImg top width="100%" src={ image } alt={title} /> }
+			{Boolean(image) && <CardImg top src={image} alt={title} />}
 			<CardBody>
-				<CardTitle>{ title }</CardTitle>
-				<CardSubtitle>{ subtitle }</CardSubtitle>
-				<p>{ formatDate(added) }</p>
+				<CardTitle>{title}</CardTitle>
+				<CardSubtitle>{subtitle}</CardSubtitle>
+				<p>{formatDate(added)}</p>
 				{/* <CardText dangerouslySetInnerHTML={{ __html: content }} /> */}
 			</CardBody>
 		</Card>

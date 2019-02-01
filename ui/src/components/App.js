@@ -4,11 +4,9 @@ import AppLayout from './AppLayout'
 
 const App = () => {
   return (
-    <div className='App'>
-      <Switch>
-        <Route path='/' component={ AppLayout } />
-      </Switch>
-    </div>
+    <Switch>
+      <Route path='/' component={AppLayout} />
+    </Switch>
   );
 }
 export default App

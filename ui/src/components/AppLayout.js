@@ -1,55 +1,26 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Container, Row, Col } from 'reactstrap'
-import HeaderNavbarContainer from '../containers/HeaderNavbarContainer'
-import CategoryPostsContainer from '../containers/CategoryPostsContainer'
-import PostsSearchBarContainer from '../containers/PostsSearchBarContainer'
-import PostLayoutContainer from '../containers/PostLayoutContainer'
+import { Container } from 'reactstrap'
 import { categoryIdByUrl } from '../common/categories'
-import MainLayout from './MainLayout';
-
-const Header = () => (
-  <Fragment>
-    <Row>
-      <Col><img className='float-left' src="images/placeholder.png" height='40px' alt='Наблюдатель' /></Col>
-      <Col><h3 className='text-justify'>Наблюдатель</h3></Col>
-      <Col><PostsSearchBarContainer /></Col>
-    </Row>
-    <hr/> 
-    <Row> 
-      <Col>
-        <HeaderNavbarContainer/>
-      </Col>
-    </Row>
-  </Fragment>
-)
-
-const Footer = () => (
-  <Row>
-    <Col className='align-center'>
-      <p>diagry ©2018</p>
-    </Col>
-  </Row>
-)
+import MainLayout from './MainLayout'
+import Header from './Header'
+import CategoryPostsContainer from '../containers/CategoryPostsContainer'
+import PostLayoutContainer from '../containers/PostLayoutContainer'
 
 const AppLayout = () => (
-  <Container>
-    <Header/>
-    
-    <Row>
+    <Container>
+      <Header/>
+      
       <Switch>
-        <Route path='/' exact component={ MainLayout } />
+        <Route path='/' exact component={MainLayout} />
         <Route path='/posts/:id' render={({ match: { params: { id }}}) => (
-          <PostLayoutContainer id={ Number.parseInt(id) } />
+          <PostLayoutContainer id={id} />
         )}/>
         <Route path='/:category' render={({ match: { params: { category }}}) => (
-          <CategoryPostsContainer category={ categoryIdByUrl(category) } />
+          <CategoryPostsContainer category={categoryIdByUrl(category)} />
         )}/>
       </Switch>
-    </Row>
-
-    <Footer/>
-  </Container>
+    </Container>
 )
 
 export default AppLayout
