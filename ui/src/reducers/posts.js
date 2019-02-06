@@ -40,7 +40,7 @@ const ids = handleActions(
       }) 
     ], [ 
       fetchPostsErr, 
-      (ids) => ({...ids, fetching: false }) 
+      (ids) => ({...ids, fetching: false, hasMore: false }) 
     ]
   ]), 
   defaultIds() 
@@ -49,7 +49,6 @@ const ids = handleActions(
 const maps = handleAction(
   combineActions(fetchPostsReq, fetchPostsSucc, fetchPostsErr),
   (maps, action) => {
-    console.log(action)
     const reduceIfKey = (map, key, isMap = true) =>
       !key? map: (isMap? {...map, [key]: ids(map[key], action) }: ids(map, action))
       

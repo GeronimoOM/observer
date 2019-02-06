@@ -6,17 +6,19 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 const PostsSearchBar = ({ posts, fetchPosts, fetching }) => (
     <AsyncTypeahead
       className='PostsSearchBar'
-      options={ posts }
-      onSearch={ fetchPosts }
-      isLoading={ fetching }
-      labelKey={ 'title' }
-      minLength={ 3 }
-      promptText={ 'Поиск' }
-      searchPosts={ 'Идет поиск...' }
-      renderMenuItemChildren={ ({ title, subtitle }) => (
+      options={posts}
+      onSearch={fetchPosts}
+      isLoading={fetching}
+      labelKey={'title'}
+      minLength={3}
+      delay={500}
+      promptText={'Поиск'}
+      searchPosts={'Идет поиск...'}
+      filterBy={() => true}
+      renderMenuItemChildren={({ title, subtitle }) => (
         <div>
-          <h4>{ title }</h4>
-          <p>{ subtitle }</p>
+          <h4>{title}</h4>
+          <p>{subtitle}</p>
         </div>
     )}
     />

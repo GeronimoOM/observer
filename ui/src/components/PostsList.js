@@ -4,7 +4,7 @@ import PostCard from './PostCard'
 import { Post } from '../types'
 
 const PostsList = ({ posts }) => (
-  <div className='PostsList'>
+  <div>
     { posts.map( (post) => 
       <PostCard key={ post.id } { ...post } /> )}
   </div>  

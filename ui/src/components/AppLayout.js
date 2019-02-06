@@ -8,18 +8,20 @@ import CategoryPostsContainer from '../containers/CategoryPostsContainer'
 import PostLayoutContainer from '../containers/PostLayoutContainer'
 
 const AppLayout = () => (
-    <Container>
+    <Container fluid className='App'>
       <Header/>
       
-      <Switch>
-        <Route path='/' exact component={MainLayout} />
-        <Route path='/posts/:id' render={({ match: { params: { id }}}) => (
-          <PostLayoutContainer id={id} />
-        )}/>
-        <Route path='/:category' render={({ match: { params: { category }}}) => (
-          <CategoryPostsContainer category={categoryIdByUrl(category)} />
-        )}/>
-      </Switch>
+      <main className='p-3'>
+        <Switch>
+          <Route path='/' exact component={MainLayout} />
+          <Route path='/posts/:id' render={({ match: { params: { id }}}) => (
+            <PostLayoutContainer id={id} />
+          )}/>
+          <Route path='/:category' render={({ match: { params: { category }}}) => (
+            <CategoryPostsContainer category={categoryIdByUrl(category)} />
+          )}/>
+        </Switch>
+      </main>
     </Container>
 )
 

@@ -1,12 +1,21 @@
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { PostFlags } from '../common/posts'
 import { fetchPostsByFlag } from '../actions/posts'
 import PostsStore from '../data/posts'
-import PostsScroll from '../components/PostsScroll'
+import MainPosts from '../components/MainPosts'
 
-const MainPostsContainer = connect(
+class MainPostsContainer extends Component {
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
+
+  render() {
+    return <MainPosts posts={this.props.posts} />
+  }
+}
+
+export default connect(
   (state) => PostsStore(state).getPostsByFlag(PostFlags.Main),
-  { fetchPosts: (page) => fetchPostsByFlag(PostFlags.Main, page) }
-)(PostsScroll)
-
-export default MainPostsContainer
+  { fetchPosts: () => fetchPostsByFlag(PostFlags.Main) }
+)(MainPostsContainer)

@@ -1,20 +1,12 @@
 
+.App {
+  max-width: 1250px;
+}
+
 .NavLink:hover {
-  background-color: #c8c8c8;
+  color: #129b96 !important;
 }
 
 .NavLink.active {
-  background-color: #c8c8c8;
-}
-
-.PostsSearchBar {
-  max-width: 200px;
-}
-
-.PostCard {
-  margin: 20px 0;
-  border-radius: 1px;
-  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 
-    0px 1px 1px 0px rgba(0,0,0,0.14), 
-    0px 2px 1px -1px rgba(0,0,0,0.12)
+  color: #129b96 !important;
 }
