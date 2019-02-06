@@ -34,29 +34,20 @@ class PostController extends Controller
      *   @OA\Parameter(
      *       name="category",
      *       in="query",
-     *       description="Category of Posts",
-     *       @OA\Schema(
-     *          type="integer",
-     *          enum={"politics", "economics", "health", "sport", "culture", "society"}
-     *       )
+     *       description="Category of Posts ('politics', 'economics', 'health', 'sport', 'culture', 'society')",
+     *       @OA\Schema(type="integer")
      *   ),
      *   @OA\Parameter(
      *       name="type",
      *       in="query",
-     *       description="Type of Posts",
-     *       @OA\Schema(
-     *          type="integer", 
-     *          enum={"news", "article", "blog post", "quote"}
-     *       )
+     *       description="Type of Posts ('news', 'article', 'blog post', 'quote')",
+     *       @OA\Schema(type="integer")
      *   ),
      *   @OA\Parameter(
      *       name="flag",
      *       in="query",
-     *       description="Flag attributed to Posts",
-     *       @OA\Schema(
-     *          type="string", 
-     *          enum={"main", "popular"}
-     *       )
+     *       description="Flag attributed to Posts ('main', 'popular')",
+     *       @OA\Schema(type="string")
      *   ),
      *   @OA\Parameter(ref="#/components/parameters/page"),
      *   @OA\Parameter(ref="#/components/parameters/elems"),
@@ -129,7 +120,7 @@ class PostController extends Controller
         return Post::collection($this->postService->search($request->input('query')));
     }
 
-     /**
+    /**
      * @OA\Post(path="/api/posts",
      *   tags={"posts"},
      *   summary="Save Post",
@@ -162,7 +153,7 @@ class PostController extends Controller
         return new Post($this->postService->save($post));
     }
 
-        /**
+    /**
      * @OA\Delete(path="/api/posts/{id}",
      *   tags={"posts"},
      *   summary="Delete Post",
@@ -179,6 +170,36 @@ class PostController extends Controller
     public function delete($postId)
     {
         $this->postService->delete($postId);
+    }
+
+
+    /**
+     * @OA\Put(path="/api/posts/{id}/flag",
+     *   tags={"posts"},
+     *   summary="Assign flag to Post",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     description="Identifier of the Post",
+     *     @OA\Schema(type="integer", minimum=1)
+     *   ),
+     *   @OA\Parameter(
+     *     name="flag",
+     *     in="query",
+     *     required=true,
+     *     description="Flag for the Post",
+     *     @OA\Schema(
+     *       type="string",
+     *       enum={"main", "popular"}
+     *     )
+     *   ),
+     *   @OA\Response(response=200, description="Post flag assigned"),
+     * )
+     */
+    public function flag(Request $request, $postId)
+    {
+        $this->postService->flag($postId, $request->input('flag'));
     }
 
      /**

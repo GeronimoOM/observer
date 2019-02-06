@@ -5,15 +5,15 @@ namespace App\Services;
 
 interface PostService
 {
-    public function find();
+    public function find($options = array());
 
     public function findById($postId);
-
-    public function findByOptions($options);
 
     public function search($query);
 
     public function save($post);
 
     public function delete($postId);
+
+    public function flag($postId, $flag);
 }

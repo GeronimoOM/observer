@@ -58,7 +58,7 @@ class Post extends Model
 
     public function scopeAbridged(Builder $query)
     {
-        return $query->selectRaw('post_id, title, subtitle, 
+        return $query->selectRaw('posts.post_id, title, subtitle, 
             SUBSTRING(content, 1, 300) AS content, type, category_id, author_id, added, image');
     }
 

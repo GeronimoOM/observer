@@ -16,43 +16,25 @@
                     {
                         "name": "category",
                         "in": "query",
-                        "description": "Category of Posts",
+                        "description": "Category of Posts ('politics', 'economics', 'health', 'sport', 'culture', 'society')",
                         "schema": {
-                            "type": "integer",
-                            "enum": [
-                                "politics",
-                                "economics",
-                                "health",
-                                "sport",
-                                "culture",
-                                "society"
-                            ]
+                            "type": "integer"
                         }
                     },
                     {
                         "name": "type",
                         "in": "query",
-                        "description": "Type of Posts",
+                        "description": "Type of Posts ('news', 'article', 'blog post', 'quote')",
                         "schema": {
-                            "type": "integer",
-                            "enum": [
-                                "news",
-                                "article",
-                                "blog post",
-                                "quote"
-                            ]
+                            "type": "integer"
                         }
                     },
                     {
                         "name": "flag",
                         "in": "query",
-                        "description": "Flag attributed to Posts",
+                        "description": "Flag attributed to Posts ('main', 'popular')",
                         "schema": {
-                            "type": "string",
-                            "enum": [
-                                "main",
-                                "popular"
-                            ]
+                            "type": "string"
                         }
                     },
                     {
@@ -203,6 +185,45 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}/flag": {
+            "put": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Assign flag to Post",
+                "operationId": "App\\Http\\Controllers\\PostController::flag",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Identifier of the Post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "flag",
+                        "in": "query",
+                        "description": "Flag for the Post",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "main",
+                                "popular"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Post flag assigned"
                     }
                 }
             }

@@ -34,6 +34,6 @@ trait Pagination
     protected function paginate($query)
     {
         $elems = Input::get('elems', self::$perPage);
-        return new Collection($query->paginate($elems)->items());
+        return new Collection($query->simplePaginate($elems)->items());
     }
 }
